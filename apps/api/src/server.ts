@@ -69,11 +69,12 @@ initRealtime(server);
  */
 startOverdueTaskScheduler();
 
-server.listen(
-  env.PORT,
-  () => {
-    console.log(
-      `API listening on ${env.PORT}`
-    );
-  }
-);
+const port = Number(process.env.PORT) || 4000;
+
+server.listen(port, "0.0.0.0", () => {
+  console.log(`API listening on ${port}`);
+});
+
+app.get("/health", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
